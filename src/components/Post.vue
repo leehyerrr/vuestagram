@@ -1,21 +1,31 @@
 <template>
-<div class="post">
+<div class="post" v-for="(a,i) in Data" :key="i">
     <div class="post-header">
-      <div class="profile"></div>
-      <span class="profile-name">ChanKim</span>
+      <div class="profile" :style="{backgroundImage:`url(${Data[i].userImage})`}"></div>
+      <span class="profile-name">{{Data[i].name}}</span>
     </div>
     <div class="post-body"></div>
     <div class="post-content">
-      <p>43 Likes</p>
-      <p><strong>글쓴이아이디</strong> 임시내용</p>
-      <p class="date">May 15</p>
+      <p>{{Data[i].likes}}</p>
+      <p><strong>{{Data[i].filter}}</strong> {{Data[i].content}}</p>
+      <p class="date">{{Data[i].date}}</p>
     </div>
-</div>   
+</div>
+   
 </template>
-
 <script>
-export default {
+// import Data from "./list.js"
 
+export default {
+  // name: post,
+  // data(){
+  //   return {
+  //     data : Data
+  //   }
+  // },
+  props:{
+    Data : Object    
+  }
 }
 </script>
 
