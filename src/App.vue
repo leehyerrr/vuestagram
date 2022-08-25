@@ -4,21 +4,23 @@
       <li>Cancel</li>
     </ul>
     <ul class="header-button-right">
-      <li>Next</li>
+      <li v-if="step == 1" @click="step++">Next</li>
+      <li v-if="step == 2" @click="publish">발행하기</li>
     </ul>
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :Data="Data" :step="step"/>
+  <Container :Data="Data" :step="step" :urlr="urlr" @emitMessage="emitMessage1"/>
   <button @click="more">더보기</button>
 
   <div class="footer">
     <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
+      <input type="file" id="file" class="inputfile" @change="upload" />
       <label for="file" class="input-plus">+</label>
     </ul>
   </div>
 </template>
+
 
 <script>
 import Container from "./components/Container";
@@ -31,7 +33,9 @@ export default {
     return {
       Data,
       num : 0,
-      step : 2
+      step : 0,
+      urlr : "",
+      memo : "",
     }
   },
   components: {
@@ -46,8 +50,31 @@ export default {
           this.num ++
         })      
     },
-    tab(){
-      // this.idx = 
+    upload(e){
+      let 파일 = e.target.files;
+      let urlr = URL.createObjectURL(파일[0]);
+      this.urlr = urlr;
+      console.log(this.urlr);      
+      this.step ++
+
+    },    
+    publish(){
+      var myData = {
+        content: this.memo,
+        name: "kkk",
+        userImage: "https://placeimg.com/100/100/arch",
+        postImage: this.urlr,
+        likes: 36,
+        date: "May 15",
+        liked: false,
+        filter: "perpetua"             
+        };
+      // myData.postImage = this.urlr;
+      this.Data.unshift(myData);
+      this.step = 0;
+    },
+    emitMessage1(e){
+      this.memo = e;
     }
   }
 };

@@ -4,7 +4,7 @@
       <div class="profile" :style="{backgroundImage:`url(${Data[i].userImage})`}"></div>
       <span class="profile-name">{{Data[i].name}}</span>
     </div>
-    <div class="post-body"></div>
+    <div class="post-body" :style="{backgroundImage:`url(${Data[i].postImage})`}"></div>
     <div class="post-content">
       <p>{{Data[i].likes}}</p>
       <p><strong>{{Data[i].filter}}</strong> {{Data[i].content}}</p>
