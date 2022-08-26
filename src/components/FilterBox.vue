@@ -1,6 +1,11 @@
 <template>
 
-    <div :class="filter + ' filter-item'" :style="`background-image:url(${urlr})`"><slot></slot></div>
+    <div :class="filter + ' filter-item'" :style="`background-image:url(${urlr})`" @click="setFilter">
+      <slot></slot>
+      <!-- <slot name="a"></slot>
+      <slot name="b"></slot>       -->
+    </div>
+
     
 </template>
 
@@ -9,6 +14,11 @@ export default {
     props : {
        urlr : String, 
        filter : String
+    },
+    methods : {
+      setFilter(){
+        this.emitter.emit('setFilter', this.filter)
+      }
     }
 }
 </script>

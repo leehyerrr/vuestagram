@@ -10,7 +10,12 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <Container :Data="Data" :step="step" :urlr="urlr" @emitMessage="emitMessage1"/>
+  <div>hello {{$store.state.name}}</div>
+  <button @click="$store.commit('changeName')">버튼</button>
+  <div>나이는 {{$store.state.age}}</div>
+  <button @click="$store.commit('changeNum', 10)">버튼</button>
+
+  <Container :Data="Data" :step="step" :urlr="urlr" @emitMessage="emitMessage1" :filter2="filter2"/>
   <button @click="more">더보기</button>
 
   <div class="footer">
@@ -36,6 +41,7 @@ export default {
       step : 0,
       urlr : "",
       memo : "",
+      filter2 : "",
     }
   },
   components: {
@@ -67,7 +73,7 @@ export default {
         likes: 36,
         date: "May 15",
         liked: false,
-        filter: "perpetua"             
+        filter: this.filter2           
         };
       // myData.postImage = this.urlr;
       this.Data.unshift(myData);
@@ -76,7 +82,13 @@ export default {
     emitMessage1(e){
       this.memo = e;
     }
-  }
+  },
+  mounted() {
+    this.emitter.on('setFilter', (filter)=>{
+      this.filter2 = filter;
+      console.log(this.filter2)
+    })    
+  }    
 };
 </script>
 

@@ -4,10 +4,12 @@
   </div>
 <!-- 필터선택페이지 -->
   <div v-if="step == 1">
-  <div class="upload-image" :style="{backgroundImage:`url(${urlr})`}"></div>
+  <div :class="`${filter2} upload-image`" :style="{backgroundImage:`url(${urlr})`}"></div>
   <div class="filters">
     <FilterBox :urlr="urlr" v-for="(a,i) in filter" :key="i" :filter="filter[i]">
-      {{a}}
+      <span class="black">{{a}}</span>
+      <!-- <template v-slot:a>데이터1</template>
+      <template v-slot:b>데이터2</template> -->
     </FilterBox> 
   </div>
     
@@ -15,7 +17,7 @@
 
 <!-- 글작성페이지 -->
   <div v-if="step == 2">
-  <div class="upload-image" :style="{backgroundImage:`url(${urlr})`}"></div>
+  <div :class="`${filter2} upload-image`" :style="{backgroundImage:`url(${urlr})`}"></div>
   <div class="write">
     <textarea class="write-box" @change="$emit('emitMessage', $event.target.value)">write!</textarea>
   </div>     
@@ -32,22 +34,26 @@ export default {
     return {
       filter: [ "aden", "_1977", "brannan", "brooklyn", "clarendon", "earlybird", "gingham", "hudson", 
 "inkwell", "kelvin", "lark", "lofi", "maven", "mayfair", "moon", "nashville", "perpetua", 
-"reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"]
+"reyes", "rise", "slumber", "stinson", "toaster", "valencia", "walden", "willow", "xpro2"],
     }
   },
   components:{
     Post,
-    FilterBox
+    FilterBox,
+    
   },
   props:{
     Data : Object,
     step : Number,
     urlr : String,
-  }
+    filter2 : String
+  },
+
 }
 </script>
 
 <style>
+.black {color:black}
 .upload-image{
 width: 100%;
 height: 450px;
