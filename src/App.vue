@@ -10,10 +10,15 @@
     <img src="./assets/logo.png" class="logo" />
   </div>
 
-  <div>hello {{$store.state.name}}</div>
+  <!-- <div>hello {{$store.state.name}}</div> -->
+  <div>{{작명작명}}</div>
   <button @click="$store.commit('changeName')">버튼</button>
-  <div>나이는 {{$store.state.age}}</div>
-  <button @click="$store.commit('changeNum', 10)">버튼</button>
+  <!-- <div>나이는 {{$store.state.age}}</div> -->
+  <div>나이는 {{age}}</div>
+  <!-- <button @click="$store.commit('changeNum', 10)">버튼</button> -->
+  <button @click="changeNum(10)">버튼</button>
+  <p>{{$store.state.more}}</p>
+  <button @click="$store.dispatch('getData')">더보기버튼 (actions)</button>
 
   <Container :Data="Data" :step="step" :urlr="urlr" @emitMessage="emitMessage1" :filter2="filter2"/>
   <button @click="more">더보기</button>
@@ -31,6 +36,7 @@
 import Container from "./components/Container";
 import Data from "./components/list.js";
 import axios from "axios"
+import {mapState, mapMutations} from "vuex"
 
 export default {
   name: "App",
@@ -46,6 +52,14 @@ export default {
   },
   components: {
     Container : Container,
+    
+  },
+  computed : {
+    // name(){
+    //   return this.$store.state.name
+    // }
+    ...mapState(['name','age']), //array형식
+    ...mapState({작명작명:'name'}), //object형식, name을 갖다 쓰고싶은데 작명하고 싶을때
     
   },
   methods:{
@@ -81,7 +95,8 @@ export default {
     },
     emitMessage1(e){
       this.memo = e;
-    }
+    },
+    ...mapMutations(['setMore','PlusLike','changeNum']) //mapMutaions가져다 쓸때
   },
   mounted() {
     this.emitter.on('setFilter', (filter)=>{
